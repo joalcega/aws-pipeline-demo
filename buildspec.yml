@@ -15,7 +15,7 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - npm ci
+      - npm install
       - npx playwright install
       - npm list
     finally:
