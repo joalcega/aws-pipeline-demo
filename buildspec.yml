@@ -16,6 +16,7 @@ phases:
       - echo Entered the build phase...
       - echo Build started on `date`
       - npm ci
+      - npx playwright install
       - npm list
     finally:
       - echo This always runs even if the install command fails
