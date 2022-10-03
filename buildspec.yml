@@ -1,10 +1,9 @@
 version: 0.2
-run-as: root
+
 phases:
   install:
     commands:
       - echo Entered the install phase...
-      - apt-get update -y
     finally:
       - echo This always runs even if the update or install command fails 
   pre_build:
