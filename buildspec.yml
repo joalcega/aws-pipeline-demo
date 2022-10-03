@@ -27,7 +27,7 @@ phases:
       - npx playwright test
 artifacts:
   files:
-    - '/playwright-report/index.html'
-    - '/scripts/*'
-    - '/appspec.yml'
+    - 'playwright-report/index.html'
+    - 'scripts/*'
+    - 'appspec.yml'
   name: builds/$CODEBUILD_BUILD_NUMBER/my-artifacts
