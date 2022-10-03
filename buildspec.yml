@@ -1,0 +1,26 @@
+version: 0.0
+run-as: root
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - apt-get update -y
+    finally:
+      - echo This always runs even if the update or install command fails 
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+    finally:
+      - echo This always runs even if the login command fails 
+  build:
+    commands:
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - npm ci
+      - npm list
+    finally:
+      - echo This always runs even if the install command fails
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - npx playwright test
