@@ -2,7 +2,7 @@
 const { test, expect } = require("@playwright/test");
 const AWS = require("aws-sdk");
 
-test("homepage has Playwright in title and get started link linking to the intro page", async ({
+test("homepage has Playwrightx in title and get started link linking to the intro page", async ({
   page,
 }) => {
   // const response = await getIntacctCredentials(
