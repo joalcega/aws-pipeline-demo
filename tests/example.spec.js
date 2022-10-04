@@ -5,13 +5,12 @@ const AWS = require("aws-sdk");
 test("homepage has Playwrightx in title and get started link linking to the intro page", async ({
   page,
 }) => {
-  // const response = await getIntacctCredentials(
-  //   "arn:aws:secretsmanager:us-west-2:673019483080:secret:Sandbox/NonProd/Intacct/Oracle-UlYAZ3"
-  // );
+  const params = await getParams({
+    Names: ["/playwright/demo/url", "/cdk-bootstrap/hnb659fds/version"],
+    WithDecryption: true,
+  });
 
-  // console.log("secret:", JSON.stringify(response));
-
-  await page.goto("https://playwright.dev/");
+  await page.goto(params["/playwright/demo/url"]);
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
@@ -29,19 +28,16 @@ test("homepage has Playwrightx in title and get started link linking to the intr
   await expect(page).toHaveURL(/.*intro/);
 });
 
-async function getIntacctCredentials(secretArn) {
-  // Create a Secrets Manager client
-  var client = new AWS.SecretsManager({
-    region: "us-west-2",
+async function getParams(request) {
+  const manager = new AWS.SSM({ region: process.env.AWS_REGION });
+
+  const response = await manager.getParameters(request).promise();
+
+  const dict = {};
+
+  response.Parameters?.forEach((parameter) => {
+    dict[parameter.Name] = parameter.Value;
   });
 
-  const response = await client
-    .getSecretValue({ SecretId: secretArn })
-    .promise();
-
-  if (!!!response.SecretString) {
-    throw new Error("Secret string is missing");
-  }
-
-  return JSON.parse(response.SecretString);
+  return dict;
 }
